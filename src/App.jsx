@@ -30,7 +30,7 @@ const App = () => {
       try {
         setLoading(true);
         const data = await FetchImages(query, page);
-        console.log(data);
+        // console.log(data);
         setImages((prevImages) => {
           return [...prevImages, ...data.results];
         });
