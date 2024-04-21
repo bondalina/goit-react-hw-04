@@ -5,7 +5,7 @@ import css from "./SearchBar.module.css";
 
 const SearchBar = ({ onSubmit }) => {
   const handleFormSubmit = async (values, actions) => {
-    if (!values.query.trim()) {
+    if (values.query === "") {
       toast.error("Please enter a search query");
       return;
     }
