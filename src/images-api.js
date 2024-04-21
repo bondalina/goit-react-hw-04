@@ -5,9 +5,9 @@ export const FetchImages = async (searchQuery, currentPage) => {
     params: {
       client_id: "NyorYZRAs_bZ8BmLzN7MNNdTDaGVfFrj5iE8aL2kSMg",
       query: searchQuery,
-      page: currentPage,
       per_page: 12,
+      page: currentPage,
     },
   });
-  return response.data;
+  return response.data.results;
 };
