@@ -1,20 +1,22 @@
 import Modal from "react-modal";
 import css from "./ImageModal.module.css";
 
-Modal.setAppElement(document.getElementById("root"));
-const ImageModal = ({ isOpen = false, photo, closeModal }) => {
+const ImageModal = ({ isOpen, onClose, imageUrl }) => {
+  const handleCloseModal = () => {
+    onClose();
+  };
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={() => closeModal(false)}
+      onRequestClose={handleCloseModal}
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       preventScroll={true}
       className={css.modal}
     >
-      <img className={css.imgCard} src={photo.src} alt={photo.description} />
-      <p>{photo.description}</p>
+      <img className={css.imageModal} src={imageUrl} alt="" />
     </Modal>
   );
 };
+
 export default ImageModal;

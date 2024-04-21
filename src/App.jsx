@@ -3,6 +3,10 @@ import { FetchImages } from "./images-api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import SearchBar from "./components/SearchBar/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import ImageModal from "./components/ImageModal/ImageModal";
+import ReactModal from "react-modal";
 // import './App.css'
 
 const App = () => {
@@ -11,6 +15,8 @@ const App = () => {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearch = async (newQuery) => {
     setQuery(newQuery);
@@ -22,6 +28,18 @@ const App = () => {
     setPage(page + 1);
   };
 
+  const handleImageClick = (imageUrl) => {
+    setSelectedImageUrl(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImageUrl(null);
+    setIsModalOpen(false);
+  };
+  useEffect(() => {
+    ReactModal.setAppElement("#root");
+  }, []);
   useEffect(() => {
     if (query === "") {
       return;
@@ -30,9 +48,8 @@ const App = () => {
       try {
         setLoading(true);
         const data = await FetchImages(query, page);
-        // console.log(data);
         setImages((prevImages) => {
-          return [...prevImages, ...data.results];
+          return [...prevImages, ...data];
         });
       } catch (error) {
         setError(true);
@@ -45,12 +62,19 @@ const App = () => {
   return (
     <div>
       <SearchBar onSubmit={handleSearch} />
-      {error && <b>Oooops!</b>}
-      {images.length > 0 && <ImageGallery items={images} />}
-      {isLoading && <p>Please wait.......</p>}
+      {error && <ErrorMessage />}
+      {images.length > 0 && (
+        <ImageGallery items={images} onImageClick={handleImageClick} />
+      )}
+      {isLoading && <Loader />}
       {images.length > 0 && !isLoading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        imageUrl={selectedImageUrl}
+      />
     </div>
   );
 };

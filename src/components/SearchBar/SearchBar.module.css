@@ -1,0 +1,40 @@
+.searchIcon {
+  box-sizing: border-box;
+  width: 24px;
+}
+.searcBtn {
+  box-sizing: border-box;
+  background-color: white;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  height: 24px;
+}
+.searchInput {
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  height: 24px;
+  font-size: 14px;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box;
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.form {
+  box-sizing: border-box;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}

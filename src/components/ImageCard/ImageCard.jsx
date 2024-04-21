@@ -1,11 +1,7 @@
-// import css from "./ImageCard.module.css"
+import css from "./ImageCard.module.css";
 
 const ImageCard = ({ urls, description }) => {
-  return (
-    <div>
-      <img src={urls.regular} alt={description} />
-    </div>
-  );
+  return <img className={css.galleryImg} src={urls.small} alt={description} />;
 };
 
 export default ImageCard;

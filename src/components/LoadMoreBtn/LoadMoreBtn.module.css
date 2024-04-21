@@ -1,0 +1,8 @@
+.loadMoreBtn {
+  display: block;
+  margin: 16px auto;
+  background-color: blue;
+  color: azure;
+  padding: 6px;
+  border: none;
+}
