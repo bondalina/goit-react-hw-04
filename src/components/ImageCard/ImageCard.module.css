@@ -1,8 +1,11 @@
+.imageThumb {
+  height: 200px;
+}
 .galleryImg {
   display: block;
   width: 100%;
   object-fit: cover;
-  height: 160px;
+  height: 100%;
 }
 .galleryImg:hover {
   transform: scale(1.02);
