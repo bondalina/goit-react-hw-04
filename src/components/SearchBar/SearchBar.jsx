@@ -1,24 +1,28 @@
 import { Formik, Form, Field } from "formik";
 import { FiSearch } from "react-icons/fi";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
 const SearchBar = ({ onSubmit }) => {
-  const handleFormSubmit = async (values, actions) => {
-    if (values.query === "") {
-      toast.error("Please enter a search query");
-      return;
-    }
-    onSubmit(values.query);
-    actions.resetForm();
-  };
+  const notify = () => toast("Please enter text to search for an image");
   return (
-    <Formik initialValues={{ query: "" }} onSubmit={handleFormSubmit}>
+    <Formik
+      initialValues={{ query: "" }}
+      onSubmit={(values, actions) => {
+        if (values.query.trim() === "") {
+          notify();
+          return;
+        }
+        onSubmit(values.query);
+        actions.resetForm();
+      }}
+    >
       <header className={css.header}>
         <Form className={css.form}>
           <button className={css.searcBtn} type="submit">
             <FiSearch className={css.searchIcon} />
           </button>
+          <Toaster />
           <Field
             className={css.searchInput}
             type="text"

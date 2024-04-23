@@ -17,6 +17,7 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
 
   const handleSearch = async (newQuery) => {
     setQuery(newQuery);
@@ -40,8 +41,9 @@ const App = () => {
   useEffect(() => {
     ReactModal.setAppElement("#root");
   }, []);
+
   useEffect(() => {
-    if (query === "") {
+    if (!query) {
       return;
     }
     async function getImages() {
@@ -49,8 +51,10 @@ const App = () => {
         setLoading(true);
         const data = await FetchImages(query, page);
         setImages((prevImages) => {
-          return [...prevImages, ...data];
+          return [...prevImages, ...data.results];
         });
+        console.log(data);
+        setShowBtn(data.total_pages && data.total_pages !== page);
       } catch (error) {
         setError(true);
       } finally {
@@ -67,7 +71,7 @@ const App = () => {
         <ImageGallery items={images} onImageClick={handleImageClick} />
       )}
       {isLoading && <Loader />}
-      {images.length > 0 && !isLoading && (
+      {showBtn && images.length > 0 && !isLoading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
       <ImageModal
